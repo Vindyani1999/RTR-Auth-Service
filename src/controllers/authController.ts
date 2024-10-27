@@ -36,3 +36,8 @@ export const loginAdmin = async (req: Request, res: Response) => {
     }
   }
 };
+
+export const logoutAdmin = (req: Request, res: Response) => {
+  // Invalidate the token on the client side
+  res.status(200).json({ message: "Logout successful" });
+};

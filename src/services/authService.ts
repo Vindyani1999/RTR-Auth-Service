@@ -35,6 +35,28 @@ class AuthService {
     // Generate and return JWT token
     return generateToken(admin.id);
   }
+
+  async logout() {
+    try {
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Include token if needed
+        },
+      });
+
+      if (response.ok) {
+        localStorage.removeItem("token"); // Remove the token from local storage
+        console.log("Logout successful");
+        // Redirect to login page or update the UI accordingly
+        window.location.href = "/login"; // Example redirect
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  }
 }
 
 export default AuthService;
