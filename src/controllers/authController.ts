@@ -99,6 +99,29 @@ export const updateLoggedInAdmin = async (req: Request, res: Response) => {
       res.status(404).json({ message: "Admin not found" });
     }
   } catch (error) {
+    res.status(500).json({
+      error:
+        error instanceof Error ? error.message : "An unknown error occurred",
+    });
+  }
+};
+
+export const updateAdminDetails = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    // Update admin details using the id and the provided data
+    const updatedAdmin = await authService.updateAdmin(id, updatedData);
+
+    if (updatedAdmin) {
+      res
+        .status(200)
+        .json({ message: "Admin updated successfully", admin: updatedAdmin });
+    } else {
+      res.status(404).json({ message: "Admin not found" });
+    }
+  } catch (error) {
     res
       .status(500)
       .json({
