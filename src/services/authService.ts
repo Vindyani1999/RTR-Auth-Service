@@ -57,6 +57,10 @@ class AuthService {
       console.error("Error during logout:", error);
     }
   }
+
+  async getAllAdmins(): Promise<IAdmin[]> {
+    return await Admin.find(); // Fetch all users without role filter
+  }
 }
 
 export default AuthService;
