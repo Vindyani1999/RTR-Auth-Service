@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
 import authRoutes from "./routes/authRoutes";
-import tableRoutes from "./routes/tableRoutes";
 
 dotenv.config();
 
@@ -14,7 +13,6 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/tables", tableRoutes);
 
 // MongoDB connection
 connectDB();

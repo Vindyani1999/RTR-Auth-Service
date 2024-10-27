@@ -1,23 +1,26 @@
-// import Admin from '../models/Admin';
-// import bcrypt from 'bcrypt';
-// import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt";
+import Admin, { IAdmin } from "../models/Admin";
 
-// const registerUser = async (userData: any) => {
-//   const hashedPassword = await bcrypt.hash(userData.password, 10);
-//   const user = new User({ ...userData, password: hashedPassword });
-//   await user.save();
-//   return user;
-// };
+class AuthService {
+  async registerAdmin(adminData: Partial<IAdmin>) {
+    const { firstName, lastName, email, password, role, phoneNumber } =
+      adminData;
 
-// const loginUser = async (credentials: any) => {
-//   const user = await User.findOne({ email: credentials.email });
-//   if (!user) throw new Error('User not found');
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password as string, 10);
 
-//   const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
-//   if (!isPasswordValid) throw new Error('Invalid credentials');
+    // Create a new Admin with the admin role
+    const newAdmin = new Admin({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      role: role || "admin",
+      phoneNumber,
+    });
 
-//   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-//   return token;
-// };
+    return await newAdmin.save();
+  }
+}
 
-// export default { registerUser, loginUser };
+export default AuthService;

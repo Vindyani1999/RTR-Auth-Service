@@ -1,9 +1,8 @@
-// import { Router } from 'express';
-// import { register, login } from '../controllers/authController';
+import express from "express";
+import { registerAdmin } from "../controllers/authController";
 
-// const router = Router();
+const router = express.Router();
 
-// router.post('/register', register);
-// router.post('/login', login);
+router.post("/create", registerAdmin); // Endpoint to add new admin
 
-// export default router;
+export default router;

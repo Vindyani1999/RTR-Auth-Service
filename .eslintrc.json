@@ -1,0 +1,22 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "react-refresh/only-export-components": "warn", // Note: Corrected the array format to single rule string
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-empty-function": "warn",
+    "quotes": ["error", "double"],
+    "semi": ["error", "always"]
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  }
+}
