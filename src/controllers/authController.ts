@@ -70,18 +70,40 @@ export const getLoggedInAdmin = async (
       res.status(404).json({ message: "Admin not found" });
     }
 
-    res
-      .status(200)
-      .json({
-        message: "Admin details retrieved successfully",
-        admin: adminDetails,
-      });
+    res.status(200).json({
+      message: "Admin details retrieved successfully",
+      admin: adminDetails,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+};
+
+export const updateLoggedInAdmin = async (req: Request, res: Response) => {
+  try {
+    const adminId = req.admin?.id; // Assume `authMiddleware` attaches `user` to `req`
+    const updatedData = req.body;
+
+    const updatedAdmin = await authService.updateAdminDetails(
+      adminId,
+      updatedData
+    );
+    if (updatedAdmin) {
+      res
+        .status(200)
+        .json({ message: "Profile updated successfully", admin: updatedAdmin });
+    } else {
+      res.status(404).json({ message: "Admin not found" });
+    }
   } catch (error) {
     res
       .status(500)
       .json({
-        message: "An error occurred",
-        error: error instanceof Error ? error.message : "Unknown error",
+        error:
+          error instanceof Error ? error.message : "An unknown error occurred",
       });
   }
 };
