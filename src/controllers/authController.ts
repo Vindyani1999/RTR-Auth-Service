@@ -41,3 +41,16 @@ export const logoutAdmin = (req: Request, res: Response) => {
   // Invalidate the token on the client side
   res.status(200).json({ message: "Logout successful" });
 };
+
+export const getAllAdmins = async (req: Request, res: Response) => {
+  try {
+    const users = await authService.getAllAdmins();
+    res.status(200).json({ message: "Users retrieved successfully", users });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: "An unknown error occurred" });
+    }
+  }
+};
