@@ -61,6 +61,10 @@ class AuthService {
   async getAllAdmins(): Promise<IAdmin[]> {
     return await Admin.find(); // Fetch all users without role filter
   }
+
+  async getAdminById(userId: string): Promise<IAdmin | null> {
+    return await Admin.findById(userId); // Find user by ID
+  }
 }
 
 export default AuthService;

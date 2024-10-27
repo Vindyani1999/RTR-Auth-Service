@@ -54,3 +54,34 @@ export const getAllAdmins = async (req: Request, res: Response) => {
     }
   }
 };
+
+export const getLoggedInAdmin = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const adminId = req.admin?.id; // Assuming `req.admin` was set by `authMiddleware`
+    if (!adminId) {
+      res.status(400).json({ message: "Admin ID not found in request" });
+    }
+
+    const adminDetails = await authService.getAdminById(adminId);
+    if (!adminDetails) {
+      res.status(404).json({ message: "Admin not found" });
+    }
+
+    res
+      .status(200)
+      .json({
+        message: "Admin details retrieved successfully",
+        admin: adminDetails,
+      });
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "An error occurred",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+  }
+};
