@@ -73,6 +73,10 @@ class AuthService {
   async updateAdmin(adminId: string, updateData: Partial<IAdmin>) {
     return await Admin.findByIdAndUpdate(adminId, updateData, { new: true });
   }
+
+  async deleteAdmin(adminId: string) {
+    return await Admin.findByIdAndDelete(adminId);
+  }
 }
 
 export default AuthService;

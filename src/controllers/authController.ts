@@ -122,6 +122,25 @@ export const updateAdminDetails = async (req: Request, res: Response) => {
       res.status(404).json({ message: "Admin not found" });
     }
   } catch (error) {
+    res.status(500).json({
+      error:
+        error instanceof Error ? error.message : "An unknown error occurred",
+    });
+  }
+};
+
+export const deleteAdmin = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const deletedAdmin = await authService.deleteAdmin(id);
+
+    if (deletedAdmin) {
+      res.status(200).json({ message: "Admin deleted successfully" });
+    } else {
+      res.status(404).json({ message: "Admin not found" });
+    }
+  } catch (error) {
     res
       .status(500)
       .json({
