@@ -6,6 +6,7 @@ import {
   logoutAdmin,
   getAllAdmins,
   getLoggedInAdmin,
+  updateLoggedInAdmin,
 } from "../controllers/authController";
 
 const router = express.Router();
@@ -15,5 +16,6 @@ router.post("/login", loginAdmin);
 router.post("/logout", logoutAdmin);
 router.get("/admins", getAllAdmins);
 router.get("/profile", authMiddleware, getLoggedInAdmin);
+router.put("/profile", authMiddleware, updateLoggedInAdmin);
 
 export default router;
