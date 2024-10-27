@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import Admin, { IAdmin } from "../models/Admin";
+import { generateToken } from "../utils/genarateToken";
 
 class AuthService {
   async registerAdmin(adminData: Partial<IAdmin>) {
@@ -20,6 +22,18 @@ class AuthService {
     });
 
     return await newAdmin.save();
+  }
+
+  async loginAdmin(email: string, password: string): Promise<string | null> {
+    const admin = await Admin.findOne({ email });
+    if (!admin) return null;
+
+    // Check if password matches
+    const isPasswordValid = await bcrypt.compare(password, admin.password);
+    if (!isPasswordValid) return null;
+
+    // Generate and return JWT token
+    return generateToken(admin.id);
   }
 }
 
