@@ -35,6 +35,48 @@ class AuthService {
     // Generate and return JWT token
     return generateToken(admin.id);
   }
+
+  async logout() {
+    try {
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Include token if needed
+        },
+      });
+
+      if (response.ok) {
+        localStorage.removeItem("token"); // Remove the token from local storage
+        console.log("Logout successful");
+        // Redirect to login page or update the UI accordingly
+        window.location.href = "/login"; // Example redirect
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  }
+
+  async getAllAdmins(): Promise<IAdmin[]> {
+    return await Admin.find(); // Fetch all users without role filter
+  }
+
+  async getAdminById(userId: string): Promise<IAdmin | null> {
+    return await Admin.findById(userId); // Find user by ID
+  }
+
+  async updateAdminDetails(adminId: string, updateData: Partial<IAdmin>) {
+    return await Admin.findByIdAndUpdate(adminId, updateData, { new: true });
+  }
+
+  async updateAdmin(adminId: string, updateData: Partial<IAdmin>) {
+    return await Admin.findByIdAndUpdate(adminId, updateData, { new: true });
+  }
+
+  async deleteAdmin(adminId: string) {
+    return await Admin.findByIdAndDelete(adminId);
+  }
 }
 
 export default AuthService;
