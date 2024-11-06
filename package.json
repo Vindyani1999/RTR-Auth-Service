@@ -2,11 +2,11 @@
   "name": "rtr-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/app.js",
+  "main": "dist/server.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "node dist/app.js",
-    "dev": "nodemon src/app.ts",
+    "start": "node dist/server.js",
+    "dev": "nodemon src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
